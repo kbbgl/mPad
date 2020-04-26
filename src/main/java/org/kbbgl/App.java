@@ -25,6 +25,9 @@ import org.kbbgl.editor.PadTextArea;
 import org.kbbgl.layout.RootLayout;
 import org.kbbgl.menu.AppMenuBar;
 import org.kbbgl.menu.file.FileMenuItemExit;
+import org.kbbgl.menu.file.FileMenuItemNew;
+import org.kbbgl.menu.file.FileMenuItemOpen;
+import org.kbbgl.menu.file.FileMenuItemSave;
 import sun.font.FontFamily;
 
 import java.io.BufferedReader;
@@ -87,39 +90,16 @@ public class App extends Application{
 
         // File menu and subitems
         Menu menuFile = new Menu("File");
-        MenuItem menuItemNew = new MenuItem("New");
-        menuItemNew.setOnAction(event -> {
-
-//            createNew(EDITOR);
-        });
-
-        MenuItem menuFileOpen = new MenuItem("Open");
-        menuFileOpen.setOnAction(event -> {
-//            chooseAndLoadFile();
-        });
-
-        MenuItem menuFileSave = new MenuItem("Save");
-        menuFileSave.setOnAction(event -> {
-//            saveFileRev();
-        });
-
-        MenuItem menuFileExit = new MenuItem("Exit");
-        menuFileExit.setOnAction(event -> {
-            getStage().close();
-        });
-
-
-//        menuFile.getItems().addAll(
-//          menuItemNew,
-//          menuFileOpen,
-//          menuFileSave,
-//          new SeparatorMenuItem(),
-//          menuFileExit
-//        );
-
         FileMenuItemExit itemExit = new FileMenuItemExit(getStage());
-        menuFile.getItems().addAll(menuFileExit);
-
+        FileMenuItemNew itemNew = new FileMenuItemNew();
+        FileMenuItemOpen itemOpen = new FileMenuItemOpen();
+        FileMenuItemSave itemSave = new FileMenuItemSave();
+        menuFile.getItems().addAll(
+                itemNew,
+                itemOpen,
+                itemSave,
+                itemExit
+        );
 
         AppMenuBar menuBar = new AppMenuBar(menuFile);
 
