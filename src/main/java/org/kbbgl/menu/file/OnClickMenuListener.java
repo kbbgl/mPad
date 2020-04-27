@@ -15,7 +15,7 @@ public class OnClickMenuListener implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
 
-        System.out.println(event.getSource().toString());
+        System.out.println("Exit menu clicked. Closing application");
 
         this.stage.close();
 

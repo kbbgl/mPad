@@ -60,7 +60,7 @@ public class App extends Application{
         this.primaryStage = primaryStage;
 
         // Add an empty editor to the tab pane
-        EditorTabPane tabPane = EditorTabPane.getInstance();
+        EditorTabPane editorTabPane = EditorTabPane.getInstance();
 
         // File menu and subitems
         Menu menuFile = new Menu("File");
@@ -76,26 +76,23 @@ public class App extends Application{
         );
 
         AppMenuBar menuBar = new AppMenuBar(menuFile);
+        VBox menuEditorSeparator = new VBox(1, editorTabPane);
+        RootLayout root = new RootLayout(menuBar, menuEditorSeparator);
 
+        Scene scene = new Scene(root, 400, 250);
+        editorTabPane.setScene(scene);
 
-        // on JavaFX application thread
         primaryStage.setTitle("mPad");
-
-        VBox layout = new VBox(1, tabPane);
-        RootLayout root = new RootLayout(menuBar, layout);
-
-        Scene scene = new Scene(root, 300, 250);
-        tabPane.prefWidthProperty().bind(scene.widthProperty());
-        tabPane.prefHeightProperty().bind(scene.heightProperty());
-
         primaryStage.setScene(scene);
         primaryStage.show();
 
-//        Region region = (Region) newTabTextArea.lookup(".content");
-//        region.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     private Stage getStage(){
         return primaryStage;
+    }
+
+    private void initializeMenu(){
+
     }
 }

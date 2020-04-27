@@ -3,6 +3,7 @@ package org.kbbgl.tabs;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseButton;
@@ -26,12 +27,18 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
         this.getSelectionModel().selectedItemProperty().addListener(this);
         this.setOnMouseClicked(this);
 
+
         // Create initial tab
         EditorTab initialTab = new EditorTab("New Tab");
         PadTextArea newTextArea = new PadTextArea();
         initialTab.setContent(newTextArea);
         addTab(initialTab);
 
+    }
+
+    public void setScene(Scene scene) {
+        this.prefHeightProperty().bind(scene.widthProperty());
+        this.prefWidthProperty().bind(scene.widthProperty());
     }
 
     public void addTab(EditorTab tab){
@@ -41,9 +48,15 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
     @Override
     public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
 
-        if (oldValue != null){
+        try {
+
             System.out.println("Tab changed: " + oldValue.getText() + " => " + newValue.getText());
             System.out.println("Currently selected tab in " + this.getSelectionModel().getSelectedIndex() + " position");
+
+        } catch (NullPointerException exception){
+
+            System.out.println("All tabs removed");
+
         }
 
     }
