@@ -16,6 +16,5 @@ public class RootLayout extends BorderPane {
         this.setTop(menu);
         this.setCenter(centerLayout);
 
-
     }
 }

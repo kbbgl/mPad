@@ -2,14 +2,16 @@ package org.kbbgl.tabs;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import org.kbbgl.editor.PadTextArea;
 
-public class EditorTabPane extends TabPane {
+public class EditorTabPane extends TabPane implements ChangeListener<Tab>, EventHandler<MouseEvent> {
 
     private static EditorTabPane instance;
-    private static ObservableList<EditorTab> tabs;
 
     public static EditorTabPane getInstance() {
 
@@ -20,16 +22,46 @@ public class EditorTabPane extends TabPane {
     }
 
     private EditorTabPane(){
-        this.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-            @Override
-            public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-            }
-        });
+
+        this.getSelectionModel().selectedItemProperty().addListener(this);
+        this.setOnMouseClicked(this);
+
+        // Create initial tab
+        EditorTab initialTab = new EditorTab("New Tab");
+        PadTextArea newTextArea = new PadTextArea();
+        initialTab.setContent(newTextArea);
+        addTab(initialTab);
+
     }
 
     public void addTab(EditorTab tab){
         this.getTabs().add(tab);
     }
 
+    @Override
+    public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
 
+        if (oldValue != null){
+            System.out.println("Tab changed: " + oldValue.getText() + " => " + newValue.getText());
+            System.out.println("Currently selected tab in " + this.getSelectionModel().getSelectedIndex() + " position");
+        }
+
+    }
+
+    @Override
+    public void handle(MouseEvent event) {
+
+        if (event.getButton().equals(MouseButton.PRIMARY)){
+            if (event.getClickCount() == 2){
+                System.out.println("Double clicked. Creating new tab...");
+                EditorTab newTab = new EditorTab("New Tab");
+                PadTextArea newTextArea = new PadTextArea();
+                newTab.setContent(newTextArea);
+                addTab(newTab);
+                System.out.println("New tab created. Number of tabs: " + this.getTabs().size());
+
+            }
+        }
+
+    }
 }

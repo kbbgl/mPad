@@ -28,6 +28,8 @@ import org.kbbgl.menu.file.FileMenuItemExit;
 import org.kbbgl.menu.file.FileMenuItemNew;
 import org.kbbgl.menu.file.FileMenuItemOpen;
 import org.kbbgl.menu.file.FileMenuItemSave;
+import org.kbbgl.tabs.EditorTab;
+import org.kbbgl.tabs.EditorTabPane;
 import sun.font.FontFamily;
 
 import java.io.BufferedReader;
@@ -41,22 +43,15 @@ import java.util.stream.Stream;
 
 public class App extends Application{
 
-    private static final String BROWSER = "Browser";
-    private static final String EDITOR = "new editor";
-    private static int browserCnt = 1;
-
     private Stage primaryStage;
-    private TabPane tabPane;
-    private Vector<PadTextArea> editors = new Vector<>();
+//    private TabPane tabPane;
+    private final Vector<PadTextArea> editors = new Vector<>();
     private PadTextArea currentEditor = null;
 
     public static void main(String[] args) {
 
         // On main thread
         Application.launch(args);
-
-        // To get list of parameters later:
-        // App.getParameters()
     }
 
     @Override
@@ -65,34 +60,13 @@ public class App extends Application{
         this.primaryStage = primaryStage;
 
         // Add an empty editor to the tab pane
-        tabPane = new TabPane();
-        Tab newTab = new Tab("New Tab");
-        PadTextArea newTabTextArea = new PadTextArea();
-        newTab.setContent(newTabTextArea);
-
-        tabPane.getTabs().add(newTab);
-        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Tab changed");
-            currentEditor = null;
-        });
-        tabPane.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)){
-                if (event.getClickCount() == 2){
-                    System.out.println("Double clicked");
-                    Tab nTab = new Tab("New Tab");
-                    PadTextArea newTextArea = new PadTextArea();
-                    nTab.setContent(newTextArea);
-
-                    tabPane.getTabs().add(nTab);
-                }
-            }
-        });
+        EditorTabPane tabPane = EditorTabPane.getInstance();
 
         // File menu and subitems
         Menu menuFile = new Menu("File");
         FileMenuItemExit itemExit = new FileMenuItemExit(getStage());
         FileMenuItemNew itemNew = new FileMenuItemNew();
-        FileMenuItemOpen itemOpen = new FileMenuItemOpen();
+        FileMenuItemOpen itemOpen = new FileMenuItemOpen(getStage());
         FileMenuItemSave itemSave = new FileMenuItemSave();
         menuFile.getItems().addAll(
                 itemNew,
@@ -114,63 +88,11 @@ public class App extends Application{
         tabPane.prefWidthProperty().bind(scene.widthProperty());
         tabPane.prefHeightProperty().bind(scene.heightProperty());
 
-
-//        Button button = new Button("Open file");
-//        button.setOnAction(event -> {
-//            System.out.println("Button pressed");
-//
-//            FileChooser fileChooser = new FileChooser();
-//            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("text files", "*.log"));
-//            File file = fileChooser.showOpenDialog(primaryStage);
-//
-//            // Check if no file chosen
-//            if (file != null){
-//                Path filePath = Paths.get(file.toURI());
-//
-//                System.out.println("File chosen: " + file.getAbsolutePath());
-//                if (file.length() % 1024 == 0){
-//                    System.out.println("File size in bytes: " + file.length());
-//                } else {
-//                    System.out.println("File size: " + file.length()/1024 + "KB");
-//                }
-//
-//
-//                try {
-//                    BufferedReader reader = Files.newBufferedReader(filePath);
-//                    Stream<String> lines = reader.lines();
-//
-//                    System.out.println("Adding lines to text area...");
-//
-//                    // TODO improve content loading into UI
-//                    lines.forEach(line -> {
-//
-//                        Platform.runLater(() -> {
-//                            textArea.appendText(line + "\n");
-//                        });
-//
-//                    });
-//
-//                    System.out.println("Added lines to text area.");
-//
-//                    System.out.println("Closing reader...");
-//                    reader.close();
-//                    System.out.println("Closed reader");
-//
-//                } catch (IOException e) {
-//                    System.out.println("Error reading file " + file.toPath() + ", " + e.getMessage());
-//                }
-//
-//
-//            }
-//        });
-
-//        root.setTop(button);
-//        root.setCenter(textArea);
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        Region region = (Region) newTabTextArea.lookup(".content");
-        region.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+//        Region region = (Region) newTabTextArea.lookup(".content");
+//        region.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     private Stage getStage(){

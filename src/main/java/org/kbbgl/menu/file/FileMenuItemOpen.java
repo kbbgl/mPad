@@ -1,18 +1,81 @@
 package org.kbbgl.menu.file;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class FileMenuItemOpen extends MenuItem implements EventHandler<ActionEvent> {
 
-    public FileMenuItemOpen(){
+    private final Stage stage;
+
+    public FileMenuItemOpen(Stage stage){
         this.setText("Open");
         this.setOnAction(this);
+        this.stage = stage;
     }
 
     @Override
     public void handle(ActionEvent event) {
         System.out.println("Opening new file...");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Log", "*.log"),
+                new FileChooser.ExtensionFilter("Text", "*.txt")
+        );
+        File file = fileChooser.showOpenDialog(this.stage);
+
+        // Check if no file chosen
+        if (file != null){
+            Path filePath = Paths.get(file.toURI());
+
+            System.out.println("File chosen: " + file.getAbsolutePath());
+            if (file.length() % 1024 == 0){
+                System.out.println("File size in bytes: " + file.length());
+            } else {
+                System.out.println("File size: " + file.length()/1024 + "KB");
+            }
+
+
+            try {
+                BufferedReader reader = Files.newBufferedReader(filePath);
+                Stream<String> lines = reader.lines();
+
+                System.out.println("Adding lines to text area...");
+
+                // TODO improve content loading into UI
+//                lines.forEach(line -> {
+//
+//                    Platform.runLater(() -> {
+//                        textArea.appendText(line + "\n");
+//                    });
+//
+//                });
+
+                System.out.println("Added lines to text area.");
+
+                System.out.println("Closing reader...");
+                reader.close();
+                System.out.println("Closed reader");
+
+            } catch (IOException e) {
+                System.out.println("Error reading file " + file.toPath() + ", " + e.getMessage());
+            }
+
+
+        }
+
     }
 }
