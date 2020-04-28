@@ -111,16 +111,7 @@ public class RootLayout extends BorderPane {
 
         EditorTab currentTab = EditorTabPane.getInstance().getCurrentTab();
         PadTextArea textArea = (PadTextArea) currentTab.getContent();
-//        textArea.focusedProperty().addListener((observable, oldValue, newValue) -> {
-//
-//            System.out.println("Text area focus");
-//
-//            Platform.runLater(() -> {
-//                if (textArea.isFocused() && !textArea.getText().isEmpty()){
-//                    textArea.selectAll();
-//                }
-//            });
-//        });
+        textArea.selectAll();
 
     }
 
