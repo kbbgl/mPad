@@ -72,7 +72,7 @@ public class RootLayout extends BorderPane {
         FileChooser fileChooser = new FileChooser();
         File file = null;
 
-            String initialFilename = textToWrite.toLowerCase();
+            String initialFilename = textToWrite.toLowerCase().trim();
             if (initialFilename.length() >= 10){
                 fileChooser.setInitialFileName(initialFilename.substring(0, 10));
             } else {
@@ -149,6 +149,16 @@ public class RootLayout extends BorderPane {
 
         System.out.println("Deleting the previous character...");
         padTextArea.deletePreviousChar();
+
+    }
+
+    public void insertNewLine() {
+
+        EditorTab currentTab = EditorTabPane.getInstance().getCurrentTab();
+        PadTextArea padTextArea = (PadTextArea) currentTab.getContent();
+
+        System.out.println("Inserting new line...");
+        padTextArea.appendText("\n");
 
     }
 }
