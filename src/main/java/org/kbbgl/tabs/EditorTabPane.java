@@ -28,13 +28,6 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
         this.getSelectionModel().selectedItemProperty().addListener(this);
         this.setOnMouseClicked(this);
 
-        // Create initial tab
-
-        PadTextArea newTextArea = new PadTextArea();
-        newTextArea.setText("Write something here!");
-        EditorTab initialTab = new EditorTab("New Tab", newTextArea);
-        addTab(initialTab);
-
     }
 
     public void setScene(Scene scene) {
@@ -52,8 +45,10 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
 
         try {
 
-            System.out.println("Tab changed: " + oldValue.getText() + " => " + newValue.getText());
-            setCurrentTab((EditorTab) this.getSelectionModel().getSelectedItem());
+            if (oldValue != null){
+                System.out.println("Tab changed: " + oldValue.getText() + " => " + newValue.getText());
+                setCurrentTab((EditorTab) this.getSelectionModel().getSelectedItem());
+            }
 
         } catch (NullPointerException exception){
 

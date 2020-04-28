@@ -1,7 +1,10 @@
 package org.kbbgl.layout;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -17,6 +20,7 @@ import org.kbbgl.tabs.EditorTab;
 import org.kbbgl.tabs.EditorTabPane;
 
 import java.io.File;
+import java.util.Optional;
 
 public class RootLayout extends BorderPane {
 
@@ -66,16 +70,84 @@ public class RootLayout extends BorderPane {
         String textToWrite = textArea.getText();
 
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialFileName(currentTab.getText());
-        File file = fileChooser.showSaveDialog(App.getStage());
+        File file = null;
 
+            String initialFilename = textToWrite.toLowerCase();
+            if (initialFilename.length() >= 10){
+                fileChooser.setInitialFileName(initialFilename.substring(0, 10));
+            } else {
+                fileChooser.setInitialFileName(initialFilename);
+            }
 
-        if (file != null){
-            FileWriterTask fileWriterTask = new FileWriterTask(file, textToWrite);
-            Thread thread = new Thread(fileWriterTask);
-            thread.setDaemon(true);
-            thread.start();
-        }
+            file = fileChooser.showSaveDialog(App.getStage());
+
+            if (file != null){
+
+                if (textToWrite.equals("")) {
+
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "This will clear file " + file.getName() + ".\nContinue?", ButtonType.OK, ButtonType.CANCEL);
+                    Optional<ButtonType> result = alert.showAndWait();
+
+                    if (!result.isPresent() || result.get() == ButtonType.CANCEL){
+
+                        System.out.println("Writing to file '" + file.getAbsolutePath() + "' cancelled.");
+
+                    } else if (result.get() == ButtonType.OK){
+                        FileWriterTask fileWriterTask = new FileWriterTask(file, textToWrite);
+                        Thread thread = new Thread(fileWriterTask);
+                        thread.setDaemon(true);
+                        thread.start();
+                    }
+                } else {
+                    FileWriterTask fileWriterTask = new FileWriterTask(file, textToWrite);
+                    Thread thread = new Thread(fileWriterTask);
+                    thread.setDaemon(true);
+                    thread.start();
+                }
+            }
+    }
+
+    public void chooseAllText() {
+
+        EditorTab currentTab = EditorTabPane.getInstance().getCurrentTab();
+        PadTextArea textArea = (PadTextArea) currentTab.getContent();
+//        textArea.focusedProperty().addListener((observable, oldValue, newValue) -> {
+//
+//            System.out.println("Text area focus");
+//
+//            Platform.runLater(() -> {
+//                if (textArea.isFocused() && !textArea.getText().isEmpty()){
+//                    textArea.selectAll();
+//                }
+//            });
+//        });
+
+    }
+
+    public void copySelectedText() {
+
+        EditorTab currentTab = EditorTabPane.getInstance().getCurrentTab();
+        PadTextArea padTextArea = (PadTextArea) currentTab.getContent();
+        String selectedText = padTextArea.getSelectedText();
+
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(selectedText);
+        clipboard.setContent(content);
+        System.out.println("Selected text '" + selectedText + "' copied to clipboard");
+
+    }
+
+    public void pasteClipboardToEditor() {
+
+        EditorTab currentTab = EditorTabPane.getInstance().getCurrentTab();
+        PadTextArea padTextArea = (PadTextArea) currentTab.getContent();
+
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        String textInClipboard = clipboard.getString();
+
+        padTextArea.appendText(textInClipboard);
+        System.out.println("Text of length " + textInClipboard.length() + " in clipboard appended");
 
     }
 }
