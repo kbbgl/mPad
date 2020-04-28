@@ -8,6 +8,8 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 
+import java.security.Key;
+
 public class MainScene extends Scene implements EventHandler<KeyEvent> {
 
     final KeyCombination findCombination = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
@@ -16,6 +18,7 @@ public class MainScene extends Scene implements EventHandler<KeyEvent> {
     final KeyCombination chooseAllText = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN);
     final KeyCombination copySelectedText = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
     final KeyCombination pasteClipboard = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN);
+    final KeyCombination deleteText = new KeyCodeCombination(KeyCode.BACK_SPACE);
 
     public MainScene(Parent root, double width, double height) {
         super(root, width, height);
@@ -28,22 +31,21 @@ public class MainScene extends Scene implements EventHandler<KeyEvent> {
         System.out.println(event.getCode().getName() + " event detected");
 
         if (findCombination.match(event)){
-            System.out.println("Search enabled");
+
+            // TODO implement search
+
         } else if (saveCombination.match(event)){
-            System.out.println("Save hotkey");
             RootLayout.getInstance().saveTextToFile();
         } else if (closeTabCombination.match(event)){
-            System.out.println("Close tab hotkey pressed");
             RootLayout.getInstance().closeTab();
         } else if (chooseAllText.match(event)) {
-            System.out.println("CTRL + A pressed");
             RootLayout.getInstance().chooseAllText();
         } else if (copySelectedText.match(event)){
-            System.out.println("CTRL + C pressed");
             RootLayout.getInstance().copySelectedText();
         } else if (pasteClipboard.match(event)){
-            System.out.println("CTRL + V");
             RootLayout.getInstance().pasteClipboardToEditor();
+        } else if (deleteText.match(event)){
+            RootLayout.getInstance().deleteText();
         }
         event.consume();
 

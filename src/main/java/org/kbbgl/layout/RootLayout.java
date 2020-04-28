@@ -141,4 +141,14 @@ public class RootLayout extends BorderPane {
         System.out.println("Text of length " + textInClipboard.length() + " in clipboard appended");
 
     }
+
+    public void deleteText() {
+
+        EditorTab currentTab = EditorTabPane.getInstance().getCurrentTab();
+        PadTextArea padTextArea = (PadTextArea) currentTab.getContent();
+
+        System.out.println("Deleting the previous character...");
+        padTextArea.deletePreviousChar();
+
+    }
 }
