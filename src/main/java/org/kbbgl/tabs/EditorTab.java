@@ -4,11 +4,17 @@ import javafx.scene.control.Tab;
 
 public class EditorTab extends Tab {
 
-    public EditorTab(String text){
+    public EditorTab(String filename){
 
-        super(text);
+        super(filename);
     }
 
     public EditorTab() {
+
+        setText("New Tab");
+
     }
+
+
+
 }

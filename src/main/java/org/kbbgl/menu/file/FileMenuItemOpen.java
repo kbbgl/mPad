@@ -7,6 +7,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.kbbgl.io.FileReaderTask;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,12 +42,10 @@ public class FileMenuItemOpen extends MenuItem implements EventHandler<ActionEve
         if (file != null){
             Path filePath = Paths.get(file.toURI());
 
-            System.out.println("File chosen: " + file.getAbsolutePath());
-            if (file.length() % 1024 == 0){
-                System.out.println("File size in bytes: " + file.length());
-            } else {
-                System.out.println("File size: " + file.length()/1024 + "KB");
-            }
+            FileReaderTask readFile = new FileReaderTask(file);
+            Thread thread = new Thread(readFile);
+            thread.setDaemon(true);
+            thread.start();
 
 
             try {

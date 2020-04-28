@@ -13,6 +13,7 @@ import org.kbbgl.editor.PadTextArea;
 public class EditorTabPane extends TabPane implements ChangeListener<Tab>, EventHandler<MouseEvent> {
 
     private static EditorTabPane instance;
+    private EditorTab currentTab;
 
     public static EditorTabPane getInstance() {
 
@@ -42,6 +43,9 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
     }
 
     public void addTab(EditorTab tab){
+
+
+
         this.getTabs().add(tab);
     }
 
@@ -51,7 +55,7 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
         try {
 
             System.out.println("Tab changed: " + oldValue.getText() + " => " + newValue.getText());
-            System.out.println("Currently selected tab in " + this.getSelectionModel().getSelectedIndex() + " position");
+            setCurrentTab((EditorTab) this.getSelectionModel().getSelectedItem());
 
         } catch (NullPointerException exception){
 
@@ -59,6 +63,16 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
 
         }
 
+    }
+
+    private void setCurrentTab(EditorTab tab){
+        this.currentTab = tab;
+        System.out.println("Currently selected tab in " + this.getSelectionModel().getSelectedIndex() + " position, title: " + tab.getText());
+
+    }
+
+    public EditorTab getCurrentTab() {
+        return currentTab;
     }
 
     @Override

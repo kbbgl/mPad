@@ -16,8 +16,6 @@ public class PadTextArea extends TextArea {
         this.setStyle("-fx-text-fill: greenyellow ;");
         this.setFont(Font.font("Courier", FontWeight.BOLD, 14));
 
-
-
     }
 
     @Override
