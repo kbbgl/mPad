@@ -43,22 +43,22 @@ public class FileReaderTask extends Task<Void> {
             reader.close();
             System.out.println("Closed reader");
 
+            lines = null;
+
         } catch (IOException e) {
             System.out.println("Error reading file " + file.getAbsolutePath());
             e.printStackTrace();
         }
-
 
         return null;
     }
 
     private void createNewTab(Stream<String> content){
 
-        EditorTab newOpenFileTab = new EditorTab(file.getName());
         PadTextArea textArea = new PadTextArea();
         textArea.setText(content.collect(Collectors.joining("\n")));
+        EditorTab newOpenFileTab = new EditorTab(file.getName(), textArea);
 
-        newOpenFileTab.setContent(textArea);
         System.out.println("Added lines to text area.");
 
 
@@ -69,6 +69,8 @@ public class FileReaderTask extends Task<Void> {
             EditorTabPane.getInstance().getSelectionModel().select(newOpenFileTab);
 
         });
+
+        content = null;
 
     }
 }

@@ -9,6 +9,8 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import org.kbbgl.editor.PadTextArea;
+import org.kbbgl.layout.MainScene;
+import org.kbbgl.layout.RootLayout;
 
 public class EditorTabPane extends TabPane implements ChangeListener<Tab>, EventHandler<MouseEvent> {
 
@@ -29,9 +31,10 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
         this.setOnMouseClicked(this);
 
         // Create initial tab
-        EditorTab initialTab = new EditorTab("New Tab");
+
         PadTextArea newTextArea = new PadTextArea();
-        initialTab.setContent(newTextArea);
+        newTextArea.setText("Write something here!");
+        EditorTab initialTab = new EditorTab("New Tab", newTextArea);
         addTab(initialTab);
 
     }

@@ -1,7 +1,6 @@
 package org.kbbgl.tabs;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 
 public class EditorTab extends Tab {
@@ -10,4 +9,7 @@ public class EditorTab extends Tab {
         super(filename);
     }
 
+    public EditorTab(String filename, Node content) {
+        super(filename, content);
+    }
 }

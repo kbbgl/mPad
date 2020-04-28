@@ -10,9 +10,9 @@ import javafx.scene.input.KeyEvent;
 
 public class MainScene extends Scene implements EventHandler<KeyEvent> {
 
-    final KeyCombination findCombination = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_ANY);
-    final KeyCombination saveCombination = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_ANY);
-    final KeyCombination closeTabCombination = new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_ANY);
+    final KeyCombination findCombination = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
+    final KeyCombination saveCombination = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+    final KeyCombination closeTabCombination = new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN);
 
     public MainScene(Parent root, double width, double height) {
         super(root, width, height);
@@ -26,6 +26,7 @@ public class MainScene extends Scene implements EventHandler<KeyEvent> {
             System.out.println("Search enabled");
         } else if (saveCombination.match(event)){
             System.out.println("Save hotkey");
+            RootLayout.getInstance().saveTextToFile();
         } else if (closeTabCombination.match(event)){
             System.out.println("Close tab hotkey pressed");
             RootLayout.getInstance().closeTab();

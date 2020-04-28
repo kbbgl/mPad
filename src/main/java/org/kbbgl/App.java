@@ -60,22 +60,6 @@ public class App extends Application{
         // Add an empty editor to the tab pane
         EditorTabPane editorTabPane = EditorTabPane.getInstance();
 
-        // File menu and subitems
-        Menu menuFile = new Menu("File");
-        FileMenuItemExit itemExit = new FileMenuItemExit(getStage());
-        FileMenuItemNew itemNew = new FileMenuItemNew();
-        FileMenuItemOpen itemOpen = new FileMenuItemOpen(getStage());
-        FileMenuItemSave itemSave = new FileMenuItemSave();
-        menuFile.getItems().addAll(
-                itemNew,
-                itemOpen,
-                itemSave,
-                itemExit
-        );
-
-        AppMenuBar menuBar = new AppMenuBar(menuFile);
-        VBox menuEditorSeparator = new VBox(1, editorTabPane);
-//        RootLayout root = new RootLayout(menuBar, menuEditorSeparator);
         RootLayout root = RootLayout.getInstance();
         MainScene scene = new MainScene(root, 400, 500);
 

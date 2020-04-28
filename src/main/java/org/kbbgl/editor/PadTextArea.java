@@ -14,11 +14,9 @@ public class PadTextArea extends TextArea {
 
         System.out.println("Pad instance created");
         this.setFont(Font.font("Courier", FontWeight.BOLD, 14));
+        this.setEditable(true);
 
     }
 
-    @Override
-    public void appendText(String text) {
-        super.appendText(text);
-    }
+
 }

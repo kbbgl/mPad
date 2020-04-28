@@ -5,6 +5,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.kbbgl.App;
+import org.kbbgl.editor.PadTextArea;
 import org.kbbgl.menu.AppMenuBar;
 import org.kbbgl.menu.file.FileMenuItemExit;
 import org.kbbgl.menu.file.FileMenuItemNew;
@@ -16,8 +17,6 @@ import org.kbbgl.tabs.EditorTabPane;
 public class RootLayout extends BorderPane {
 
     private static RootLayout instance;
-//    private MenuBar menu;
-//    private VBox centerLayout;
 
     public static RootLayout getInstance() {
         if (instance == null){
@@ -25,15 +24,6 @@ public class RootLayout extends BorderPane {
         }
         return instance;
     }
-
-//    public RootLayout(MenuBar menu, VBox centerLayout){
-//        this.menu = menu;
-//        this.centerLayout = centerLayout;
-//
-//        this.setTop(menu);
-//        this.setCenter(centerLayout);
-//
-//    }
 
     private RootLayout(){
 
@@ -62,6 +52,14 @@ public class RootLayout extends BorderPane {
     public void closeTab(){
         EditorTab currentTab = EditorTabPane.getInstance().getCurrentTab();
         EditorTabPane.getInstance().getTabs().remove(currentTab);
+
+    }
+
+    public void saveTextToFile(){
+
+        EditorTab currentTab = EditorTabPane.getInstance().getCurrentTab();
+        PadTextArea textArea = (PadTextArea) currentTab.getContent();
+        System.out.println("Saving " + textArea.getText());
 
     }
 }
