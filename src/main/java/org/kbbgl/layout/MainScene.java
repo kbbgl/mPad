@@ -28,6 +28,7 @@ public class MainScene extends Scene implements EventHandler<KeyEvent> {
             System.out.println("Save hotkey");
         } else if (closeTabCombination.match(event)){
             System.out.println("Close tab hotkey pressed");
+            RootLayout.getInstance().closeTab();
         }
         event.consume();
 

@@ -43,8 +43,6 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
 
     public void addTab(EditorTab tab){
 
-
-
         this.getTabs().add(tab);
     }
 
@@ -64,10 +62,12 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
 
     }
 
+
+
     private void setCurrentTab(EditorTab tab){
         this.currentTab = tab;
         System.out.println("Currently selected tab in " + this.getSelectionModel().getSelectedIndex() + " position, title: " + tab.getText());
-
+        this.getSelectionModel().select(tab);
     }
 
     public EditorTab getCurrentTab() {
@@ -84,6 +84,7 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
                 PadTextArea newTextArea = new PadTextArea();
                 newTab.setContent(newTextArea);
                 addTab(newTab);
+                setCurrentTab(newTab);
                 System.out.println("New tab created. Number of tabs: " + this.getTabs().size());
 
             }

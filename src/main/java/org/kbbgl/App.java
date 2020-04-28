@@ -44,7 +44,7 @@ import java.util.stream.Stream;
 
 public class App extends Application{
 
-    private Stage primaryStage;
+    public static Stage primaryStage;
 
     public static void main(String[] args) {
 
@@ -55,7 +55,7 @@ public class App extends Application{
     @Override
     public void start(Stage primaryStage) {
 
-        this.primaryStage = primaryStage;
+        App.primaryStage = primaryStage;
 
         // Add an empty editor to the tab pane
         EditorTabPane editorTabPane = EditorTabPane.getInstance();
@@ -75,18 +75,18 @@ public class App extends Application{
 
         AppMenuBar menuBar = new AppMenuBar(menuFile);
         VBox menuEditorSeparator = new VBox(1, editorTabPane);
-        RootLayout root = new RootLayout(menuBar, menuEditorSeparator);
+//        RootLayout root = new RootLayout(menuBar, menuEditorSeparator);
+        RootLayout root = RootLayout.getInstance();
         MainScene scene = new MainScene(root, 400, 500);
 
         editorTabPane.setScene(scene);
-
         primaryStage.setTitle("mPad");
         primaryStage.setScene(scene);
         primaryStage.show();
 
     }
 
-    private Stage getStage(){
+    public static Stage getStage(){
         return primaryStage;
     }
 
