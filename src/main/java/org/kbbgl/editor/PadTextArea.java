@@ -13,7 +13,6 @@ public class PadTextArea extends TextArea {
     private void initialize() {
 
         System.out.println("Pad instance created");
-        this.setStyle("-fx-text-fill: black ;");
         this.setFont(Font.font("Courier", FontWeight.BOLD, 14));
 
     }

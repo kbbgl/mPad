@@ -11,7 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -22,6 +22,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.kbbgl.editor.PadTextArea;
+import org.kbbgl.layout.MainScene;
 import org.kbbgl.layout.RootLayout;
 import org.kbbgl.menu.AppMenuBar;
 import org.kbbgl.menu.file.FileMenuItemExit;
@@ -44,9 +45,6 @@ import java.util.stream.Stream;
 public class App extends Application{
 
     private Stage primaryStage;
-//    private TabPane tabPane;
-    private final Vector<PadTextArea> editors = new Vector<>();
-    private PadTextArea currentEditor = null;
 
     public static void main(String[] args) {
 
@@ -78,8 +76,8 @@ public class App extends Application{
         AppMenuBar menuBar = new AppMenuBar(menuFile);
         VBox menuEditorSeparator = new VBox(1, editorTabPane);
         RootLayout root = new RootLayout(menuBar, menuEditorSeparator);
+        MainScene scene = new MainScene(root, 400, 500);
 
-        Scene scene = new Scene(root, 400, 250);
         editorTabPane.setScene(scene);
 
         primaryStage.setTitle("mPad");
@@ -92,7 +90,5 @@ public class App extends Application{
         return primaryStage;
     }
 
-    private void initializeMenu(){
 
-    }
 }

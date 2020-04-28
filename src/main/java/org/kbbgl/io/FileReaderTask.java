@@ -39,6 +39,10 @@ public class FileReaderTask extends Task<Void> {
             Stream<String> lines = reader.lines();
             createNewTab(lines);
 
+            System.out.println("Closing reader...");
+            reader.close();
+            System.out.println("Closed reader");
+
         } catch (IOException e) {
             System.out.println("Error reading file " + file.getAbsolutePath());
             e.printStackTrace();
@@ -55,6 +59,8 @@ public class FileReaderTask extends Task<Void> {
         textArea.setText(content.collect(Collectors.joining("\n")));
 
         newOpenFileTab.setContent(textArea);
+        System.out.println("Added lines to text area.");
+
 
         // Create a new tab and move to it
         Platform.runLater(() -> {

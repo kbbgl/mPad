@@ -28,7 +28,6 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
         this.getSelectionModel().selectedItemProperty().addListener(this);
         this.setOnMouseClicked(this);
 
-
         // Create initial tab
         EditorTab initialTab = new EditorTab("New Tab");
         PadTextArea newTextArea = new PadTextArea();

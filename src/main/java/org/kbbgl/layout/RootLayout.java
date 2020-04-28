@@ -6,8 +6,20 @@ import javafx.scene.layout.VBox;
 
 public class RootLayout extends BorderPane {
 
+    private RootLayout instance;
     private MenuBar menu;
     private VBox centerLayout;
+
+    public RootLayout getInstance() {
+        if (instance == null){
+            instance = new RootLayout();
+        }
+        return instance;
+    }
+
+    private RootLayout(){
+
+    }
 
     public RootLayout(MenuBar menu, VBox centerLayout){
         this.menu = menu;
@@ -16,5 +28,9 @@ public class RootLayout extends BorderPane {
         this.setTop(menu);
         this.setCenter(centerLayout);
 
+    }
+
+    public VBox getCenterLayout() {
+        return centerLayout;
     }
 }
