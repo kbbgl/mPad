@@ -4,8 +4,10 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import org.kbbgl.App;
 import org.kbbgl.editor.PadTextArea;
+import org.kbbgl.io.FileWriterTask;
 import org.kbbgl.menu.AppMenuBar;
 import org.kbbgl.menu.file.FileMenuItemExit;
 import org.kbbgl.menu.file.FileMenuItemNew;
@@ -13,6 +15,8 @@ import org.kbbgl.menu.file.FileMenuItemOpen;
 import org.kbbgl.menu.file.FileMenuItemSave;
 import org.kbbgl.tabs.EditorTab;
 import org.kbbgl.tabs.EditorTabPane;
+
+import java.io.File;
 
 public class RootLayout extends BorderPane {
 
@@ -59,7 +63,19 @@ public class RootLayout extends BorderPane {
 
         EditorTab currentTab = EditorTabPane.getInstance().getCurrentTab();
         PadTextArea textArea = (PadTextArea) currentTab.getContent();
-        System.out.println("Saving " + textArea.getText());
+        String textToWrite = textArea.getText();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialFileName(currentTab.getText());
+        File file = fileChooser.showSaveDialog(App.getStage());
+
+
+        if (file != null){
+            FileWriterTask fileWriterTask = new FileWriterTask(file, textToWrite);
+            Thread thread = new Thread(fileWriterTask);
+            thread.setDaemon(true);
+            thread.start();
+        }
 
     }
 }

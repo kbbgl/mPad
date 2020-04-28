@@ -25,10 +25,6 @@ public class FileMenuItemOpen extends MenuItem implements EventHandler<ActionEve
         System.out.println("Opening new file...");
 
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Log", "*.log"),
-                new FileChooser.ExtensionFilter("Text", "*.txt")
-        );
         File file = fileChooser.showOpenDialog(this.stage);
 
         // Check if no file chosen
