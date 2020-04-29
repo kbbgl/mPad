@@ -25,6 +25,7 @@ import java.util.Optional;
 public class RootLayout extends BorderPane {
 
     private static RootLayout instance;
+    private final VBox menuEditorSeparator;
 
     public static RootLayout getInstance() {
         if (instance == null){
@@ -51,7 +52,7 @@ public class RootLayout extends BorderPane {
         );
 
         AppMenuBar menuBar = new AppMenuBar(menuFile);
-        VBox menuEditorSeparator = new VBox(1, editorTabPane);
+        menuEditorSeparator = new VBox(1, editorTabPane);
 
         this.setTop(menuBar);
         this.setCenter(menuEditorSeparator);
@@ -160,5 +161,18 @@ public class RootLayout extends BorderPane {
         System.out.println("Inserting new line...");
         padTextArea.appendText("\n");
 
+    }
+
+    // TODO fix case when tab created
+    // reproduced when creating 'new tab', 'new tab 1' and then deleting 'new tab'
+    public void createNewTab() {
+        System.out.println("Creating new tab...");
+
+        if (EditorTabPane.getInstance().getTabs().size() > 0) {
+
+            EditorTabPane.getInstance().addTab(new EditorTab("New Tab " + EditorTabPane.getInstance().getTabs().size()));
+        } else {
+            EditorTabPane.getInstance().addTab(new EditorTab("New Tab"));
+        }
     }
 }

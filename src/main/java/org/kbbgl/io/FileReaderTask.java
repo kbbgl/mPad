@@ -66,7 +66,6 @@ public class FileReaderTask extends Task<Void> {
         Platform.runLater(() -> {
 
             EditorTabPane.getInstance().addTab(newOpenFileTab);
-            EditorTabPane.getInstance().getSelectionModel().select(newOpenFileTab);
 
         });
 

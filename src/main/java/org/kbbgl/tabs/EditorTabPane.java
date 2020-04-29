@@ -28,6 +28,7 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
         this.getSelectionModel().selectedItemProperty().addListener(this);
         this.setOnMouseClicked(this);
 
+        addTab(new EditorTab("New Tab"));
     }
 
     public void setScene(Scene scene) {
@@ -38,6 +39,7 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
     public void addTab(EditorTab tab){
 
         this.getTabs().add(tab);
+        setCurrentTab(tab);
     }
 
     @Override
@@ -76,11 +78,13 @@ public class EditorTabPane extends TabPane implements ChangeListener<Tab>, Event
         if (event.getButton().equals(MouseButton.PRIMARY)){
             if (event.getClickCount() == 2){
                 System.out.println("Double clicked. Creating new tab...");
-                EditorTab newTab = new EditorTab("New Tab");
-                PadTextArea newTextArea = new PadTextArea();
-                newTab.setContent(newTextArea);
-                addTab(newTab);
-                setCurrentTab(newTab);
+
+                if (this.getTabs().size() > 0) {
+                    addTab(new EditorTab("New Tab " + this.getTabs().size()));
+                } else {
+                    addTab(new EditorTab("New Tab"));
+                }
+
                 System.out.println("New tab created. Number of tabs: " + this.getTabs().size());
 
             }

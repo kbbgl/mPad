@@ -28,14 +28,14 @@ repositories {
     jcenter()
 }
 
-tasks.register("createExe"){
-    group = "Distribution"
-    description = "Creates an executable file for the Windows platform"
-
-    doLast {
-        println("Creating .exe in path")
-
-    }
-}
+//tasks.register("createExe"){
+//    group = "Distribution"
+//    description = "Creates an executable file for the Windows platform"
+//
+//    doLast {
+//        println("Creating .exe in path")
+//
+//    }
+//}
 
 mainClassName = "org.kbbgl.App"

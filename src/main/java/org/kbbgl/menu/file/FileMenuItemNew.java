@@ -3,6 +3,9 @@ package org.kbbgl.menu.file;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
+import org.kbbgl.layout.RootLayout;
+import org.kbbgl.tabs.EditorTab;
+import org.kbbgl.tabs.EditorTabPane;
 
 public class FileMenuItemNew extends MenuItem implements EventHandler<ActionEvent> {
 
@@ -13,6 +16,6 @@ public class FileMenuItemNew extends MenuItem implements EventHandler<ActionEven
 
     @Override
     public void handle(ActionEvent event) {
-        System.out.println("Create new file...");
+        RootLayout.getInstance().createNewTab();
     }
 }

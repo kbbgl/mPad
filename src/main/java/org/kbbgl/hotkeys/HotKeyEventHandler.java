@@ -18,6 +18,7 @@ public class HotKeyEventHandler implements EventHandler<KeyEvent> {
     final KeyCombination pasteClipboard = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN);
     final KeyCombination deleteText = new KeyCodeCombination(KeyCode.BACK_SPACE);
     final KeyCombination insertNewLine = new KeyCodeCombination(KeyCode.ENTER);
+    final KeyCombination newFile = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
 
     public HotKeyEventHandler() {
 
@@ -46,6 +47,8 @@ public class HotKeyEventHandler implements EventHandler<KeyEvent> {
             RootLayout.getInstance().deleteText();
         } else if (insertNewLine.match(event)){
             RootLayout.getInstance().insertNewLine();
+        } else if (newFile.match(event)){
+            RootLayout.getInstance().createNewTab();
         }
         event.consume();
 
