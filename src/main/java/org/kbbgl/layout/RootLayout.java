@@ -8,6 +8,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.kbbgl.App;
 import org.kbbgl.editor.PadTextArea;
 import org.kbbgl.io.FileWriterTask;
@@ -52,7 +53,7 @@ public class RootLayout extends BorderPane {
         );
 
         AppMenuBar menuBar = new AppMenuBar(menuFile);
-        menuEditorSeparator = new VBox(1, editorTabPane);
+        menuEditorSeparator = new VBox(1,editorTabPane);
 
         this.setTop(menuBar);
         this.setCenter(menuEditorSeparator);
@@ -174,5 +175,15 @@ public class RootLayout extends BorderPane {
         } else {
             EditorTabPane.getInstance().addTab(new EditorTab("New Tab"));
         }
+    }
+
+    public void createNewWindow() {
+
+        System.out.println("Creating new window...");
+        Stage newStage = new Stage();
+        MainScene newScene = new MainScene(RootLayout.getInstance(), 300, 300);
+        newStage.setScene(newScene);
+        newStage.show();
+
     }
 }
